@@ -10,9 +10,9 @@ class CreateInterventions < ActiveRecord::Migration[5.2]
       t.integer :employeeID
       t.datetime :dateAndTimeInterventionStart
       t.datetime :dateAndTimeInterventionEnd
-      t.string :result
+      t.string :result, default: "Incomplete"
       t.string :report, null: false
-      t.string :status
+      t.string :status, default: "Pending"
     end
   end
 end

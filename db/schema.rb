@@ -135,9 +135,9 @@ ActiveRecord::Schema.define(version: 2021_11_29_162201) do
     t.integer "employeeID"
     t.datetime "dateAndTimeInterventionStart"
     t.datetime "dateAndTimeInterventionEnd"
-    t.string "result"
+    t.string "result", default: "Incomplete"
     t.string "report", null: false
-    t.string "status"
+    t.string "status", default: "Pending"
     t.index ["author"], name: "fk_rails_372877a32f"
     t.index ["batteryID"], name: "fk_rails_6a2ce4133f"
     t.index ["buildingID"], name: "fk_rails_3cf6d713d1"

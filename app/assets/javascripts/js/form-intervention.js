@@ -101,3 +101,24 @@ function elevatorDropdownList() {
         }
     })
 };
+
+$('#submit_intervention').on('click', function (event) {
+    alert("Thank you!! Your intervention has been submitted.");
+    $.ajax({
+        url: "/intervention",
+        type: "POST",
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {
+            customer: $('#customer').val(),
+            building: $('#building').val(),
+            battery: $('#battery').val(),
+            column: $('#column').val(),
+            elevator: $('#elevator').val(),
+            employee: $('#employee').val(),
+            description: $('#description').val()
+        },
+        success: function(data) {
+            
+        }
+    })
+});

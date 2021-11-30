@@ -1,7 +1,10 @@
-<h1 class="heading-title heading-dotted text-center">Intervention Page</h1>
+<%= csrf_meta_tag %>
+<div class="heading-title heading-dotted text-center">
+    <h1>Intervention Page</h1>
+</div>
 <div class="form-container">
     <div id="customerDropdown" class="text-center form-selector">
-        <%= form_with do |f| %>
+        <%= form_with method: :post do |f|%>
             <% options = options_from_collection_for_select(@customerlist, 'id', 'fullName') %>
             <%= f.select(:customer, options,{ :include_blank => false, :prompt=> 'Select Customer'},{:onchange => "buildingDropdownList();"}) %>
         <% end %>
@@ -19,19 +22,19 @@
         <% end %>
     </div>
     <div id="columnDropdown"  class="text-center form-selector">
-        <%= form_with do |f| %>
+        <%= form_with method: :post do |f| %>
             <% options = options_from_collection_for_select([], 'id', 'types') %>
             <%= f.select(:column, options,{ :include_blank => false, :prompt=> 'Select Column'},{:onchange => "elevatorDropdownList();"}) %>
         <% end %>
     </div>
     <div id="elevatorDropdown"  class="text-center form-selector">
-        <%= form_with do |f| %>
+        <%= form_with method: :post do |f| %>
             <% options = options_from_collection_for_select([], 'id', 'serialNumber') %>
             <%= f.select(:elevator, options,{ :include_blank => false, :prompt=> 'Select Elevator'}) %>
         <% end %>
     </div>
     <div id="employeeDropdown"  class="text-center form-selector">
-        <%= form_with do |f| %>
+        <%= form_with method: :post do |f| %>
             <% options = options_from_collection_for_select(Employee.all, 'id', 'email') %>
             <%= f.select(:employee, options,{ :include_blank => false, :prompt=> 'Select Employee'}) %>
         <% end %>
@@ -39,10 +42,10 @@
     <div class="row description-align">
             <div class="col-md-12" >
                 <label>Description</label>
-                <textarea class="textarea-intervention" maxlength="1000" rows="2" class="form-control" style="width: 500px"></textarea>
+                <textarea id="description" class="textarea-intervention" maxlength="1000" rows="2" class="form-control" style="width: 500px"></textarea>
             </div>
     </div>
     <div class="text-center" style="margin-top: 20px; width: ">
-        <%= submit_tag "Submit", id:"submit", class:"btn btn-primary" %>
+        <%= submit_tag "Submit", id:"submit_intervention", class:"btn btn-primary" %>
     </div>
 </div>

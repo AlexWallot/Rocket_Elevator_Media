@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/intervention/column', to: 'intervention#column'
   get '/intervention/elevator', to: 'intervention#elevator'
   post '/quote', to: 'quote#create'
+  post '/intervention', to: 'intervention#create'
   post '/contact', to: 'contact#create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
