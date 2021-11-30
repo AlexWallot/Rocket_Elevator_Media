@@ -1,0 +1,147 @@
+
+<h1 class="heading-title heading-dotted text-center">Intervention Page</h1>
+<div class="border: 1px solid black;">
+    <div id="customerDropdown" class="text-center">
+        <%= form_with do |f| %>
+            <% options = options_from_collection_for_select(@customerlist, 'id', 'fullName') %>
+            <%= f.select(:customer, options,{ :include_blank => false, :prompt=> 'Select Customer'},{:onchange => "buildingDropdownList();"}) %>
+        <% end %>
+    <div>
+    <div id="buildingDropdown" class="text-center">
+        <%= form_with do |f| %>
+            <% options = options_from_collection_for_select([], 'id', 'fullNameAdministrator') %>
+            <%= f.select(:building, options,{ :include_blank => false, :prompt=> 'Select Building'},{:onchange => "batteryDropdownList();"}) %>
+        <% end %>
+    <div>
+    <div id="batteryDropdown" class="text-center">
+        <%= form_with do |f| %>
+            <% options = options_from_collection_for_select([], 'id', 'types') %>
+            <%= f.select(:battery, options,{ :include_blank => false, :prompt=> 'Select Battery'},{:onchange => "columnDropdownList();"}) %>
+        <% end %>
+    <div>
+    <div id="columnDropdown" class="text-center">
+        <%= form_with do |f| %>
+            <% options = options_from_collection_for_select([], 'id', 'types') %>
+            <%= f.select(:column, options,{ :include_blank => false, :prompt=> 'Select Column'},{:onchange => "elevatorDropdownList();"}) %>
+        <% end %>
+    <div>
+    <div id="elevatorDropdown" class="text-center">
+        <%= form_with do |f| %>
+            <% options = options_from_collection_for_select([], 'id', 'serialNumber') %>
+            <%= f.select(:elevator, options,{ :include_blank => false, :prompt=> 'Select Elevator'}) %>
+        <% end %>
+    <div>
+    <div id="employeeDropdown" class="text-center">
+        <%= form_with do |f| %>
+            <% options = options_from_collection_for_select(Employee.all, 'id', 'email') %>
+            <%= f.select(:elevator, options,{ :include_blank => false, :prompt=> 'Select Employee'}) %>
+        <% end %>
+    <div>
+    <div class="row">
+            <div class="col-md-12" >
+                <label>Description</label>
+                <textarea required maxlength="10000" rows="8" class="form-control"></textarea>
+            </div>
+    </div>
+    <div>
+        <%= submit_tag "Submit", id:"submit", class:"btn btn-primary" %>
+    </div>
+    
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#buildingDropdown').hide();
+        $('#batteryDropdown').hide();
+        $('#columnDropdown').hide();
+        $('#elevatorDropdown').hide();
+    });
+    
+    function buildingDropdownList() {
+        if ($('#customer').val() == "") {
+            $('#buildingDropdown').hide();
+        }else{
+            $.ajax({
+                url: "/intervention/building",
+                type: "GET",
+                data: {customer: $('#customer').val()},
+                success: function(data) {
+                    var list = [];
+                    $.each(data,function(key, value) { 
+                        list += '<option value="' + value.id + '">' + value.fullNameAdministrator + '</option>';    
+                    });
+                    $('#building').empty();
+                    $('#building').append('<option value="">Select Building</option>');
+                    $('#building').append(list);
+                }
+            })
+            $('#buildingDropdown').show();
+            $('#employeeDropdown').show();
+        }
+    };
+
+    function batteryDropdownList() {
+        if ($('#building').val() == "") {
+            $('#batteryDropdown').hide();
+        }else{
+            $.ajax({
+                url: "/intervention/battery",
+                type: "GET",
+                data: {building: $('#building').val()},
+                success: function(data) {
+                    console.log(data);
+                    var list = [];
+                    $.each(data,function(key, value) { 
+                        list += '<option value="' + value.id + '">' + value.types + '</option>';    
+                    });
+                    $('#battery').empty();
+                    $('#battery').append('<option value="">Select Battery</option>');
+                    $('#battery').append(list);
+                }
+            })
+            $('#batteryDropdown').show();
+        }
+    };
+
+    function columnDropdownList() {
+        if ($('#battery').val() == "") {
+            $('#columnDropdown').hide();
+        }else{
+            $.ajax({
+                url: "/intervention/column",
+                type: "GET",
+                data: {battery: $('#battery').val()},
+                success: function(data) {
+                    console.log(data);
+                    var list = [];
+                    $.each(data,function(key, value) { 
+                        list += '<option value="' + value.id + '">' + value.types + '</option>';    
+                    });
+                    $('#column').empty();
+                    $('#column').append('<option value="">None</option>');
+                    $('#column').append(list);
+                }
+            })
+            $('#columnDropdown').show();
+            $('#elevatorDropdown').show();
+        }
+    };
+
+    function elevatorDropdownList() {
+        $.ajax({
+            url: "/intervention/elevator",
+            type: "GET",
+            data: {column: $('#column').val()},
+            success: function(data) {
+                console.log(data);
+                var list = [];
+                $.each(data,function(key, value) { 
+                    list += '<option value="' + value.id + '">' + value.serialNumber + '</option>';    
+                });
+                $('#elevator').empty();
+                $('#elevator').append('<option value="">None</option>');
+                $('#elevator').append(list);
+            }
+        })
+    };
+</script>

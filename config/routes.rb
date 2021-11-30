@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   get 'pages/quote'
   get 'pages/charts'
   get 'pages/admin_stats'
+  get 'pages/intervention'
   get '/quote/new', to: 'quote#new'
+  get '/intervention/building', to: 'intervention#building'
+  get '/intervention/battery', to: 'intervention#battery'
+  get '/intervention/column', to: 'intervention#column'
+  get '/intervention/elevator', to: 'intervention#elevator'
   post '/quote', to: 'quote#create'
   post '/contact', to: 'contact#create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

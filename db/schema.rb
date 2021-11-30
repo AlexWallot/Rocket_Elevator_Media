@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_190401) do
+ActiveRecord::Schema.define(version: 2021_11_29_162201) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "typeAddress", null: false
@@ -125,6 +125,28 @@ ActiveRecord::Schema.define(version: 2021_11_16_190401) do
     t.index ["user_id"], name: "fk_rails_dcfd3d4fc3"
   end
 
+  create_table "interventions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "author", null: false
+    t.bigint "customerID", null: false
+    t.bigint "buildingID", null: false
+    t.bigint "batteryID", null: false
+    t.bigint "columnID"
+    t.bigint "elevatorID"
+    t.integer "employeeID"
+    t.datetime "dateAndTimeInterventionStart"
+    t.datetime "dateAndTimeInterventionEnd"
+    t.string "result"
+    t.string "report", null: false
+    t.string "status"
+    t.index ["author"], name: "fk_rails_372877a32f"
+    t.index ["batteryID"], name: "fk_rails_6a2ce4133f"
+    t.index ["buildingID"], name: "fk_rails_3cf6d713d1"
+    t.index ["columnID"], name: "fk_rails_1675c96d09"
+    t.index ["customerID"], name: "fk_rails_4adf6b5643"
+    t.index ["elevatorID"], name: "fk_rails_83ef1359f7"
+    t.index ["employeeID"], name: "fk_rails_2eafa4827a"
+  end
+
   create_table "leads", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "fullNameContact", null: false
     t.string "compagnyName", null: false
@@ -178,4 +200,11 @@ ActiveRecord::Schema.define(version: 2021_11_16_190401) do
   add_foreign_key "customers", "users", column: "userId"
   add_foreign_key "elevators", "columns", column: "columnId"
   add_foreign_key "employees", "users"
+  add_foreign_key "interventions", "batteries", column: "batteryID"
+  add_foreign_key "interventions", "buildings", column: "buildingID"
+  add_foreign_key "interventions", "columns", column: "columnID"
+  add_foreign_key "interventions", "customers", column: "customerID"
+  add_foreign_key "interventions", "elevators", column: "elevatorID"
+  add_foreign_key "interventions", "employees", column: "author"
+  add_foreign_key "interventions", "employees", column: "employeeID"
 end
