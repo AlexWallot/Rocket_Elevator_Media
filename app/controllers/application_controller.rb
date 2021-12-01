@@ -13,7 +13,6 @@ require 'sendgrid-ruby'
 class ApplicationController < ActionController::Base
     include SendGrid
     helper_method :watson
-    protect_from_forgery prepend: true
     
     def watson
         authenticator = IBMWatson::Authenticators::IamAuthenticator.new(
