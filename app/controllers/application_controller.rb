@@ -13,7 +13,7 @@ require 'sendgrid-ruby'
 class ApplicationController < ActionController::Base
     include SendGrid
     helper_method :watson
-    
+
     def watson
         authenticator = IBMWatson::Authenticators::IamAuthenticator.new(
             apikey: ENV["TEXT_TO_SPEECH_APIKEY"]

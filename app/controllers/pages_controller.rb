@@ -1,5 +1,8 @@
 require "json"
 class PagesController < ApplicationController
+  before_action :authenticate_user!
+  skip_before_action :authenticate_user!, :only => [:index, :residential, :commercial, :quote], raise: false
+
   def index
   end
 
