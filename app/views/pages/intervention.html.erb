@@ -11,32 +11,32 @@
     </div>
     <div id="buildingDropdown" class="text-center form-selector">
         <%= form_with do |f| %>
-            <% options = options_from_collection_for_select([], 'id', 'fullNameAdministrator') %>
+            <% options = options_from_collection_for_select([], 'id', 'id') %>
             <%= f.select(:building, options,{ :include_blank => false, :prompt=> 'Select Building'},{:onchange => "batteryDropdownList();"}) %>
         <% end %>
     </div>
     <div id="batteryDropdown"  class="text-center form-selector">
         <%= form_with do |f| %>
-            <% options = options_from_collection_for_select([], 'id', 'types') %>
+            <% options = options_from_collection_for_select([], 'id', 'id') %>
             <%= f.select(:battery, options,{ :include_blank => false, :prompt=> 'Select Battery'},{:onchange => "columnDropdownList();"}) %>
         <% end %>
     </div>
     <div id="columnDropdown"  class="text-center form-selector">
         <%= form_with method: :post do |f| %>
-            <% options = options_from_collection_for_select([], 'id', 'types') %>
+            <% options = options_from_collection_for_select([], 'id', 'id') %>
             <%= f.select(:column, options,{ :include_blank => false, :prompt=> 'Select Column'},{:onchange => "elevatorDropdownList();"}) %>
         <% end %>
     </div>
     <div id="elevatorDropdown"  class="text-center form-selector">
         <%= form_with method: :post do |f| %>
-            <% options = options_from_collection_for_select([], 'id', 'serialNumber') %>
-            <%= f.select(:elevator, options,{ :include_blank => false, :prompt=> 'Select Elevator'}) %>
+            <% options = options_from_collection_for_select([], 'id', 'id') %>
+            <%= f.select(:elevator, options,{ :include_blank => false, :prompt=> 'None'}) %>
         <% end %>
     </div>
     <div id="employeeDropdown"  class="text-center form-selector">
         <%= form_with method: :post do |f| %>
             <% options = options_from_collection_for_select(Employee.all, 'id', 'email') %>
-            <%= f.select(:employee, options,{ :include_blank => false, :prompt=> 'Select Employee'}) %>
+            <%= f.select(:employee, options,{ :include_blank => false, :prompt=> 'Employee: None'}) %>
         <% end %>
     </div>
     <div class="row description-align">

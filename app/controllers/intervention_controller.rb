@@ -13,7 +13,7 @@ class InterventionController < ApplicationController
 
     def building
         @customer = params[:customer]
-        @building = Building.where(:customerId => @customer).select(:id ,:fullNameAdministrator)
+        @building = Building.where(:customerId => @customer).select(:id)
 
         respond_to do |format|
             format.json  { render :json => @building }      
@@ -22,7 +22,7 @@ class InterventionController < ApplicationController
 
     def battery
         @building = params[:building]
-        @battery = Batterie.where(:buildingId => @building).select(:id ,:types)
+        @battery = Batterie.where(:buildingId => @building).select(:id)
 
         respond_to do |format|
             format.json  { render :json => @battery }      
@@ -31,7 +31,7 @@ class InterventionController < ApplicationController
 
     def column
         @battery = params[:battery]
-        @column = Column.where(:batteryId => @battery).select(:id ,:types)
+        @column = Column.where(:batteryId => @battery).select(:id)
 
         respond_to do |format|
             format.json  { render :json => @column }      
@@ -40,7 +40,7 @@ class InterventionController < ApplicationController
 
     def elevator
         @column = params[:column]
-        @elevator = Elevator.where(:columnId => @column).select(:id ,:serialNumber)
+        @elevator = Elevator.where(:columnId => @column).select(:id)
 
         respond_to do |format|
             format.json  { render :json => @elevator }      
@@ -66,12 +66,12 @@ class InterventionController < ApplicationController
         @author = User.where(:id => @intervention.author).uniq.pluck(:email).first
         ZendeskAPI::Ticket.new($client, :id => 1, :priority => "urgent") # doesn't actually send a request, must explicitly call #save!
         ZendeskAPI::Ticket.create!($client, :type => "problem", :subject => "#{@customer}", :comment => { :value => "Requester: #{@author} 
-                                                                                                                                  The Customer: #{@customer}
-                                                                                                                                  BuildingID: #{@intervention.buildingID}
-                                                                                                                                  BatteryID: #{@intervention.batteryID}
-                                                                                                                                  ColumnID: #{@intervention.columnID}
-                                                                                                                                  ElevatorID: #{@intervention.elevatorID}
-                                                                                                                                  Employee: #{@intervention.employeeID}
-                                                                                                                                  Description: #{@intervention.report}"}, :submitter_id => $client.current_user.id , :priority => "urgent")
+                                                                                                                    The Customer: #{@customer}
+                                                                                                                    BuildingID: #{@intervention.buildingID}
+                                                                                                                    BatteryID: #{@intervention.batteryID}
+                                                                                                                    ColumnID: #{@intervention.columnID}
+                                                                                                                    ElevatorID: #{@intervention.elevatorID}
+                                                                                                                    Employee: #{@intervention.employeeID}
+                                                                                                                    Description: #{@intervention.report}"}, :submitter_id => $client.current_user.id , :priority => "urgent")
       end 
 end
