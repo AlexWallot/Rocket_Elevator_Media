@@ -66,12 +66,12 @@ class InterventionController < ApplicationController
         @author = User.where(:id => @intervention.author).uniq.pluck(:email).first
         ZendeskAPI::Ticket.new($client, :id => 1, :priority => "urgent") # doesn't actually send a request, must explicitly call #save!
         ZendeskAPI::Ticket.create!($client, :type => "problem", :subject => "#{@customer}", :comment => { :value => "Requester: #{@author} 
-                                                                                                                    The Customer: #{@customer}
-                                                                                                                    BuildingID: #{@intervention.buildingID}
-                                                                                                                    BatteryID: #{@intervention.batteryID}
-                                                                                                                    ColumnID: #{@intervention.columnID}
-                                                                                                                    ElevatorID: #{@intervention.elevatorID}
-                                                                                                                    Employee: #{@intervention.employeeID}
-                                                                                                                    Description: #{@intervention.report}"}, :submitter_id => $client.current_user.id , :priority => "urgent")
+        The Customer: #{@customer}
+        BuildingID: #{@intervention.buildingID}
+        BatteryID: #{@intervention.batteryID}
+        ColumnID: #{@intervention.columnID}
+        ElevatorID: #{@intervention.elevatorID}
+        Employee: #{@intervention.employeeID}
+        Description: #{@intervention.report}"}, :submitter_id => $client.current_user.id , :priority => "urgent")
       end 
 end
