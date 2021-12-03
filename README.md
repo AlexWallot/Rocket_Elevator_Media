@@ -42,6 +42,7 @@ We have 7 API on the project
 - **[IBM Watson]**
 - **[Dropbox]**
 - **[Slack]**
+- **[REST API]**  FOR ENDPOINTS GO ON THE [Consolidation_REST_API](https://github.com/AlexWallot/Consolidation_Rest_API)
 
 If you want to test Dropbox, you have to create a customer (from backoffice) and a lead (from the index page) with the same phone number and email and go on the Admin_Stats page to trigger Dropbox.
 
