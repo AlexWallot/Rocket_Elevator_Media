@@ -8,7 +8,7 @@
 require "faker"
 require "json"
 
-User.create(id: 1,email: 'nicolas.genest@codeboxx.biz',password: 'password')
+User.create(id: 1,email: 'nicolas.genest@codeboxx.biz',password: 'password',isAdmin: true)
 User.create(id: 2,email: 'nadya.fortier@codeboxx.biz',password: 'password')
 User.create(id: 3,email: 'martin.chantal@codeboxx.biz',password: 'password')
 User.create(id: 4,email: 'mathieu.houde@codeboxx.biz',password: 'password')

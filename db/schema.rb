@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_162201) do
+ActiveRecord::Schema.define(version: 2021_12_07_195340) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "typeAddress", null: false
@@ -162,6 +162,29 @@ ActiveRecord::Schema.define(version: 2021_11_29_162201) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "login_activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "scope"
+    t.string "strategy"
+    t.string "identity"
+    t.boolean "success"
+    t.string "failure_reason"
+    t.string "user_type"
+    t.bigint "user_id"
+    t.string "context"
+    t.string "ip"
+    t.text "user_agent"
+    t.text "referrer"
+    t.string "city"
+    t.string "region"
+    t.string "country"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at"
+    t.index ["identity"], name: "index_login_activities_on_identity"
+    t.index ["ip"], name: "index_login_activities_on_ip"
+    t.index ["user_type", "user_id"], name: "index_login_activities_on_user_type_and_user_id"
+  end
+
   create_table "quotes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "type_building", null: false
     t.integer "numApartment"
@@ -186,6 +209,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_162201) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.boolean "isAdmin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

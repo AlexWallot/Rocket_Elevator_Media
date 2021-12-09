@@ -9,8 +9,7 @@ namespace :db do
     end
     task :fact_quote do
         ActiveRecord::Base.establish_connection(:adapter  => "mysql2",:host => ENV["HOST_MYSQL"], :username => ENV["MYSQL_USERNAME"],:password => ENV["MYSQL_PASSWORD"],:database => ENV["MYSQL_DATABASE"])
-        row = ActiveRecord::Base.connection.execute('SELECT q.id, q.created_at ,q.compagnyName ,q.email ,q.numElevator 
-                                                    FROM quotes q; ')
+        row = ActiveRecord::Base.connection.execute(ENV["FACT_QUOTE_QUERY"])
         ActiveRecord::Base.establish_connection(:adapter  => "postgresql",:host => ENV["HOST_POSTGRESQL"], :username => ENV["POSTGRESQL_USERNAME"],:password => ENV["POSTGRESQL_PASSWORD"],:database => ENV["POSTGRESQL_DATABASE"])
         row.each do |val|
             query = "INSERT INTO public.fact_quotes (\"quoteId\", creation_date, \"compagnyName\", email, \"nbElevator\") VALUES(#{val[0]},'#{val[1]}', '#{val[2].gsub("'","''")}', '#{val[3]}', #{val[4]});"
@@ -20,8 +19,7 @@ namespace :db do
 
     task :fact_contact do
         ActiveRecord::Base.establish_connection(:adapter  => "mysql2",:host => ENV["HOST_MYSQL"],:username => ENV["MYSQL_USERNAME"],:password => ENV["MYSQL_PASSWORD"],:database => ENV["MYSQL_DATABASE"])
-        row = ActiveRecord::Base.connection.execute('SELECT l.id , l.`date`,l.compagnyName,l.email,l.nameProject
-                                                     FROM leads l ')
+        row = ActiveRecord::Base.connection.execute(ENV["FACT_CONTACT_QUERY"])
         ActiveRecord::Base.establish_connection(:adapter  => "postgresql",:host => ENV["HOST_POSTGRESQL"],:username => ENV["POSTGRESQL_USERNAME"],:password => ENV["POSTGRESQL_PASSWORD"],:database => ENV["POSTGRESQL_DATABASE"])
         row.each do |val|
             query = "INSERT INTO public.fact_contacts (\"contactId\", creation_date, \"compagnyName\", \"email\", \"nameProject\") VALUES(#{val[0]},'#{val[1]}', '#{val[2].gsub("'","''")}', '#{val[3]}', '#{val[4].gsub("'","''")}');"
@@ -31,12 +29,7 @@ namespace :db do
 
     task :fact_elevator do
         ActiveRecord::Base.establish_connection(:adapter  => "mysql2",:host => ENV["HOST_MYSQL"], :username => ENV["MYSQL_USERNAME"],:password => ENV["MYSQL_PASSWORD"], :database => ENV["MYSQL_DATABASE"])
-        row = ActiveRecord::Base.connection.execute('SELECT e.serialNumber AS Serial_Number, e.dateCommissioning AS Date_Commissioning,b.id AS BuildingID,b.customerId AS CustomerID, a.city AS City 
-                                                   FROM elevators e
-                                                   INNER JOIN `columns` co ON e.columnId = co.id
-                                                   INNER JOIN batteries ba ON co.batteryId = ba.id 
-                                                   INNER JOIN buildings b ON ba.buildingId = b.id
-                                                   INNER JOIN addresses a ON b.addressId = a.id; ')
+        row = ActiveRecord::Base.connection.execute(ENV["FACT_ELEVATOR_QUERY"])
         ActiveRecord::Base.establish_connection(:adapter  => "postgresql",:host => ENV["HOST_POSTGRESQL"],:username => ENV["POSTGRESQL_USERNAME"],:password => ENV["POSTGRESQL_PASSWORD"],:database => ENV["POSTGRESQL_DATABASE"])
         row.each do |val|
             query = "INSERT INTO public.fact_elevators (\"serialNumber\", \"dateCommissioning\", \"buildingId\", \"customerId\", city) VALUES('#{val[0]}','#{val[1]}', #{val[2]}, #{val[3]}, '#{val[4].gsub("'","''")}');"
@@ -46,14 +39,7 @@ namespace :db do
     # not finished
     task :dim_customer do
         ActiveRecord::Base.establish_connection(:adapter  => "mysql2",:host => ENV["HOST_MYSQL"],:username => ENV["MYSQL_USERNAME"],:password => ENV["MYSQL_PASSWORD"],:database => ENV["MYSQL_DATABASE"])
-        row = ActiveRecord::Base.connection.execute('SELECT c.dateCreation, c.compagnyName ,c.fullName ,c.email , COUNT(e.notes), a.city 
-                                                    FROM elevators e
-                                                    INNER JOIN `columns` co ON e.columnId = co.id
-                                                    INNER JOIN batteries ba ON co.batteryId = ba.id 
-                                                    INNER JOIN buildings b ON ba.buildingId = b.id
-                                                    INNER JOIN customers c ON b.customerId = c.id
-                                                    INNER JOIN addresses a ON b.addressId = a.id
-                                                    GROUP BY c.dateCreation,c.compagnyName,c.fullName ,c.email,a.city; ')
+        row = ActiveRecord::Base.connection.execute(ENV["DIM_CUSTOMER_QUERY"])
         ActiveRecord::Base.establish_connection(:adapter  => "postgresql",:host => ENV["HOST_POSTGRESQL"], :username => ENV["POSTGRESQL_USERNAME"],:password => ENV["POSTGRESQL_PASSWORD"],:database => ENV["POSTGRESQL_DATABASE"])
         row.each do |val|
             query = "INSERT INTO public.dim_customers (creation_date, \"compagnyName\", \"fullNameContact\", email, \"nbElevator\",city) VALUES('#{val[0]}','#{val[1].gsub("'","''")}', '#{val[2].gsub("'","''")}', '#{val[3]}', #{val[4]}, '#{val[5].gsub("'","''")}');"

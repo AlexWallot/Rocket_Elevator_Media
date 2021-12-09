@@ -1,7 +1,11 @@
 RailsAdmin.config do |config|
 
   config.authorize_with do
-    redirect_to main_app.root_path unless user_signed_in?
+    if current_user.nil?
+      redirect_to main_app.root_path, flash: {error: 'Please Login to Continue..'}
+    elsif !current_user.isAdmin?
+      redirect_to main_app.root_path, flash: {error: 'You are not Admin!'}
+    end
   end
   ### Popular gems integration
 

@@ -114,3 +114,11 @@ gem 'zendesk_api', '~> 1.13', '>= 1.13.4'
 
 gem 'twilio-ruby'
 
+# Run against this stable release
+group :development, :test do
+  gem 'rspec-rails', '~> 5.0.0'
+end
+
+gem 'rails-controller-testing'
+
+gem 'authtrail'
