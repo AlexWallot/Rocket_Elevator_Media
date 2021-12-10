@@ -9,7 +9,7 @@
 </h3>
   
   <p align="center">
-    Odyssey Program - Weeks 4 & 5
+    Odyssey Program - Weeks 10
   </p>
 </p>
 
@@ -25,6 +25,15 @@ By the 4th week We have created a CRUD website using a using Ruby on Rails with 
 website used: [rocketlift.ca/](https://rocketlift.ca/)
 
 We have also included a MySql Database that saves the quotations inserted in the quote form, and an Admin page.
+
+For the week 10, we have to implement some test with RSpec.
+
+If you want to execute the test, i have two file.
+
+```bundle exec rspec ./spec/streamer_spec.rb```
+```bundle exec rspec ./spec/pages_controller_spec.rb```
+
+For the HTTPS Website: https://youtu.be/FfcGjYskpHI
 
 ##
 
