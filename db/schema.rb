@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_07_195340) do
+ActiveRecord::Schema.define(version: 2021_12_10_165239) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "typeAddress", null: false
@@ -160,6 +160,21 @@ ActiveRecord::Schema.define(version: 2021_12_07_195340) do
     t.datetime "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "letsencrypt_certificates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "domain"
+    t.text "certificate"
+    t.text "intermediaries"
+    t.text "key"
+    t.datetime "expires_at"
+    t.datetime "renew_after"
+    t.string "verification_path"
+    t.string "verification_string"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["domain"], name: "index_letsencrypt_certificates_on_domain"
+    t.index ["renew_after"], name: "index_letsencrypt_certificates_on_renew_after"
   end
 
   create_table "login_activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

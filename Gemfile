@@ -122,3 +122,5 @@ end
 gem 'rails-controller-testing'
 
 gem 'authtrail'
+
+gem 'rails-letsencrypt'
