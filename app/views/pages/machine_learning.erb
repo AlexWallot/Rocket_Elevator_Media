@@ -40,6 +40,7 @@ $(document).ready(function(){
     if ($('#language').val() == "" || $('#upload').val() == "") {
       alert("One field is empty");
     }else{
+      if ($('#language').val() == "en-Us") {
         var params = {
             // Request parameters
             "shortAudio": "true",
@@ -57,6 +58,25 @@ $(document).ready(function(){
               }, 15000);
             }
         })
+      }else if ($('#language').val() == "fr-Fr") {
+        var params = {
+            // Request parameters
+            "shortAudio": "true",
+        };
+        var file = $('input#upload')[0].files[0];
+        $.ajax({
+            url: "/identification/createFrench",
+            type: "POST",
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            data: {file: file.name},
+            success: function(data) {
+              setTimeout(function() {
+                  console.log(data['location']);
+                  getRequest(data['location']);
+              }, 15000);
+            }
+        })
+      }
     } 
   });
 

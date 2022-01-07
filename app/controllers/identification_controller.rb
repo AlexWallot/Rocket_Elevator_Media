@@ -25,6 +25,32 @@ class IdentificationController < ApplicationController
         render json: {location: response['Operation-Location']}       
     end
 
+    def createFrench
+        require 'net/http'
+        require "uri"
+
+        url = 'https://westus.api.cognitive.microsoft.com/spid/v1.0/identify?identificationProfileIds=4a5df6d4-a111-467c-8828-2d0678e3229d&shortAudio=true'
+
+        uri = URI.parse(url);
+
+        filename = File.read('app/ML_CONVERSATIONS_MONO_16/' + params[:file])
+
+        http = Net::HTTP.new(uri.host, uri.port)
+        request = Net::HTTP::Post.new(uri.request_uri)
+        # Request headers
+        request.content_type = 'application/octet-stream'
+        # Request headers
+        request['Ocp-Apim-Subscription-Key'] = '1f376d589a0b48c2aca22968d4b7bd03'
+        # Request body
+        request.body = filename
+
+        http.use_ssl = true
+
+        response = http.request(request)
+
+        render json: {location: response['Operation-Location']} 
+    end
+
     def selectedProfile
         require 'net/http'
         require "uri"

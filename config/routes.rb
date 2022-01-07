@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   post '/intervention', to: 'intervention#create'
   post '/contact', to: 'contact#create'
   post '/identification', to: 'identification#create'
+  post '/identification/createFrench', to: 'identification#createFrench'
   mount LetsEncrypt::Engine => '/.well-known'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
