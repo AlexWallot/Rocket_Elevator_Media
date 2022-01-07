@@ -15,8 +15,10 @@
 
 
 ## Machine Learning
+
 In week 13, we had to implement a Speech to text instance using Azure Cognitive Services to our application.
 The report(https://docs.google.com/document/d/1X0FY4_BD4Iab_SkY6G7AUQZz1FXqtr7-nJzJUExisKw/edit) describes all the technical steps that were needed to achive that goal.  Once in the back office of the website, click on the AI tab and you can now test the instance by selecting a conversation .wav file located in app/ML_CONVERSATIONS_MONO_16.  A POST request will then be performed and once the POST is completed, a GET request will be enabled and display the profile ID of the recongnized user.  The code for the requests can be found at this path controllers/identification_controller.rb as well as the views views/pages/machine_learning.erb
+
 
 
 
